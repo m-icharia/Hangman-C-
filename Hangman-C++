@@ -1,0 +1,317 @@
+#include <iostream> // for use of input/output
+#include <string> //for use of strings
+#include <cstdlib> //for use of rand
+#include <vector> //for vectors
+#include <ctime> //for time value
+
+using namespace std;
+
+const int number_words = 10; //word bank
+const string words[10] = {"engineering","knowledge","mississauga","components","universities","spiderman","bedroom","refrigerator","government","apartment"};
+string test = "";
+vector<char> letters_guessed;
+int wrong_guesses = 0;
+bool gamewon = false;
+
+auto getWord() -> string //uses rand to choose a word from the word bank
+{
+    srand(time(0));
+    int number = rand() % number_words;
+    return words[number];
+}
+
+auto display_word(const string & word) -> void //instructs to guess word/displays number of letters
+{
+    cout << endl;
+    cout << "Guess The Word" << endl;
+    cout << "Number of Letters: " << word.size() << endl;
+    for(int i = 0; i < int(word.size()); i++)
+    {
+        cout << " _ "; 
+        test = test + "_";
+    }
+    cout << endl;
+}
+
+auto Check_letter(string word, char letter) -> bool //checks if input matches letter in the word, otherwise displays wrong guess
+{
+    cout << endl;
+    int found = word.find(letter);
+    letters_guessed.push_back(letter);
+    if(found != int(string::npos))
+    {
+        test.at(found) = letter;
+        for(int i = 0; i < int(word.size()); i++)
+        {
+            if(word.at(i) == letter)
+            test.at(i) = letter;
+        }
+        cout << "     Correct Guess!     " << endl;
+        cout << "Answer: " << test <<endl;
+        return true;
+    }
+    else
+    {
+        wrong_guesses++;
+        cout << "     Wrong Guess!     " << endl;
+        cout << "Answer: " << test <<endl;
+        return false;
+    }
+}
+
+auto Guess_letter(string word) -> void //sets up the word bank and function for guessing letters
+{
+    cout << endl;
+    bool isAlpha = false;
+    bool guessed = false;
+    cout << "Guess a Letter with Your Keyboard and Press Enter" << endl;
+    char letter;
+    std::cin >> letter;
+    while(!isAlpha)
+    {
+        {
+            isAlpha = true;
+            for(int i = 0; i < int(letters_guessed.size()); i++)
+            {
+                if(letters_guessed.at(i) == letter)
+                    guessed = true;
+            }
+            if(!guessed)
+            {
+                Check_letter(word ,letter);
+            }
+            else
+            {
+                cout << "This Letter Has Been Guessed" << endl;
+            }
+        }
+    }
+    cout << endl;
+    cout << "The Following Letters Have Been Guessed" << endl;
+    for (int i = 0; i < int(letters_guessed.size()); i++)
+    {
+        cout << " " << letters_guessed.at(i);
+    }
+    cout << endl;
+    cout << " " << endl;
+    cout << endl;
+
+}
+
+auto drawhangman() -> void // switch statement for hangman (wrong guesses)
+{
+    switch(wrong_guesses) 
+    {
+        case 0:
+            std::cout << "O     O    O O     O     O    O O O O   O       O    O O    O     O " << std::endl;
+            std::cout << "O     O   O   O    O O   O   O          O O   O O   O   O   O O   O " << std::endl;
+            std::cout << "O O O O  O O O O   O  O  O   O          O  O O  O  O O O O  O  O  O " << std::endl;
+            std::cout << "O     O  O     O   O   O O   O    O O   O   O   O  O     O  O   O O " << std::endl;
+            std::cout << "O     O  O     O   O     O    O O O     O       O  O     O  O     O " << std::endl;
+            std::cout << "------------------------------------------------------------------- " << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "------------------------------------------------------------------- " << std::endl;
+            break;
+        case 1:
+            std::cout << "O     O    O O     O     O    O O O O   O       O    O O    O     O " << std::endl;
+            std::cout << "O     O   O   O    O O   O   O          O O   O O   O   O   O O   O " << std::endl;
+            std::cout << "O O O O  O O O O   O  O  O   O          O  O O  O  O O O O  O  O  O " << std::endl;
+            std::cout << "O     O  O     O   O   O O   O    O O   O   O   O  O     O  O   O O " << std::endl;
+            std::cout << "O     O  O     O   O     O    O O O     O       O  O     O  O     O " << std::endl;
+            std::cout << "------------------------------------------------------------------- " << std::endl;
+            std::cout << "|                                |                                |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "------------------------------------------------------------------- " << std::endl;
+            break;
+        case 2:
+            std::cout << "O     O    O O     O     O    O O O O   O       O    O O    O     O " << std::endl;
+            std::cout << "O     O   O   O    O O   O   O          O O   O O   O   O   O O   O " << std::endl;
+            std::cout << "O O O O  O O O O   O  O  O   O          O  O O  O  O O O O  O  O  O " << std::endl;
+            std::cout << "O     O  O     O   O   O O   O    O O   O   O   O  O     O  O   O O " << std::endl;
+            std::cout << "O     O  O     O   O     O    O O O     O       O  O     O  O     O " << std::endl;
+            std::cout << "------------------------------------------------------------------- " << std::endl;
+            std::cout << "|                                |                                |" << std::endl;
+            std::cout << "|                                O                                |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "------------------------------------------------------------------- " << std::endl;
+            break;
+        case 3:
+            std::cout << "O     O    O O     O     O    O O O O   O       O    O O    O     O " << std::endl;
+            std::cout << "O     O   O   O    O O   O   O          O O   O O   O   O   O O   O " << std::endl;
+            std::cout << "O O O O  O O O O   O  O  O   O          O  O O  O  O O O O  O  O  O " << std::endl;
+            std::cout << "O     O  O     O   O   O O   O    O O   O   O   O  O     O  O   O O " << std::endl;
+            std::cout << "O     O  O     O   O     O    O O O     O       O  O     O  O     O " << std::endl;
+            std::cout << "------------------------------------------------------------------- " << std::endl;
+            std::cout << "|                                |                                |" << std::endl;
+            std::cout << "|                                O                                |" << std::endl;
+            std::cout << "|                               /                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "------------------------------------------------------------------- " << std::endl;
+            break;
+        case 4:
+            std::cout << "O     O    O O     O     O    O O O O   O       O    O O    O     O " << std::endl;
+            std::cout << "O     O   O   O    O O   O   O          O O   O O   O   O   O O   O " << std::endl;
+            std::cout << "O O O O  O O O O   O  O  O   O          O  O O  O  O O O O  O  O  O " << std::endl;
+            std::cout << "O     O  O     O   O   O O   O    O O   O   O   O  O     O  O   O O " << std::endl;
+            std::cout << "O     O  O     O   O     O    O O O     O       O  O     O  O     O " << std::endl;
+            std::cout << "------------------------------------------------------------------- " << std::endl;
+            std::cout << "|                                |                                |" << std::endl;
+            std::cout << "|                                O                                |" << std::endl;
+            std::cout << "|                               / |                               |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "------------------------------------------------------------------- " << std::endl;
+            break;
+        case 5:
+            std::cout << "O     O    O O     O     O    O O O O   O       O    O O    O     O " << std::endl;
+            std::cout << "O     O   O   O    O O   O   O          O O   O O   O   O   O O   O " << std::endl;
+            std::cout << "O O O O  O O O O   O  O  O   O          O  O O  O  O O O O  O  O  O " << std::endl;
+            std::cout << "O     O  O     O   O   O O   O    O O   O   O   O  O     O  O   O O " << std::endl;
+            std::cout << "O     O  O     O   O     O    O O O     O       O  O     O  O     O " << std::endl;
+            std::cout << "------------------------------------------------------------------- " << std::endl;
+            std::cout << "|                                |                                |" << std::endl;
+            std::cout << "|                                O                                |" << std::endl;
+            std::cout << "|                               / |                               |" << std::endl;
+            std::cout << "|                                |                                |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "------------------------------------------------------------------- " << std::endl;
+            break;
+        case 6:
+            std::cout << "O     O    O O     O     O    O O O O   O       O    O O    O     O " << std::endl;
+            std::cout << "O     O   O   O    O O   O   O          O O   O O   O   O   O O   O " << std::endl;
+            std::cout << "O O O O  O O O O   O  O  O   O          O  O O  O  O O O O  O  O  O " << std::endl;
+            std::cout << "O     O  O     O   O   O O   O    O O   O   O   O  O     O  O   O O " << std::endl;
+            std::cout << "O     O  O     O   O     O    O O O     O       O  O     O  O     O " << std::endl;
+            std::cout << "------------------------------------------------------------------- " << std::endl;
+            std::cout << "|                                |                                |" << std::endl;
+            std::cout << "|                                O                                |" << std::endl;
+            std::cout << "|                               / |                               |" << std::endl;
+            std::cout << "|                                |                                |" << std::endl;
+            std::cout << "|                               /                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "------------------------------------------------------------------- " << std::endl;
+            break;
+        case 7:
+            std::cout << "O     O    O O     O     O    O O O O   O       O    O O    O     O " << std::endl;
+            std::cout << "O     O   O   O    O O   O   O          O O   O O   O   O   O O   O " << std::endl;
+            std::cout << "O O O O  O O O O   O  O  O   O          O  O O  O  O O O O  O  O  O " << std::endl;
+            std::cout << "O     O  O     O   O   O O   O    O O   O   O   O  O     O  O   O O " << std::endl;
+            std::cout << "O     O  O     O   O     O    O O O     O       O  O     O  O     O " << std::endl;
+            std::cout << "------------------------------------------------------------------- " << std::endl;
+            std::cout << "|                                |                                |" << std::endl;
+            std::cout << "|                                O                                |" << std::endl;
+            std::cout << "|                               / |                               |" << std::endl;
+            std::cout << "|                                |                                |" << std::endl;
+            std::cout << "|                               / |                               |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "|                                                                 |" << std::endl;
+            std::cout << "------------------------------------------------------------------- " << std::endl;
+    }
+}   
+
+auto checkgamewon() -> void //checking if the game has been won by appearance of "_"
+{
+    bool checkwin = false;
+    for(int i = 0; i < int(test.size()); i++)
+    {
+        if(test.at(i) == '_')
+        checkwin = true;
+    }
+    if(!checkwin)
+    gamewon = true;
+}
+
+auto gamewonscreen() -> void //screen for winning game
+{
+        cout << "Congrats, You've Successfully Guessed the Word";
+        cout << endl;
+        exit(0);
+}
+
+auto gameoverscreen() -> void //screen for losing game
+{
+        cout << "Game Over, Better Luck Next Time";
+        cout << endl;
+        exit(0);
+}
+
+auto main() -> int //game function
+{
+    char Homescreen{}; // Homescreen
+ 
+    cout << "              SYDE 121 Group 26          " << endl;
+    cout << "                  Hangman               " << endl;
+    cout << endl;
+    cout << "You Have 7 Guesses to Guess the Mystery Word!" << endl;
+    cout << "     Press Any Key Then Enter to Start " << endl;
+    std::cin >> Homescreen;
+    bool game_cycle = true;
+
+    while(game_cycle) //Game Operation
+    {
+        test = "";
+        letters_guessed.clear();
+        gamewon = false;
+        wrong_guesses = 0;
+        string current_word = getWord();
+        display_word(current_word);
+    while(wrong_guesses < 7 && !gamewon)
+    {
+        Guess_letter(current_word);
+        drawhangman();
+        checkgamewon();
+    }
+    if(gamewon)
+        gamewonscreen();
+    else
+        gameoverscreen();
+    }
+    return EXIT_SUCCESS;
+}
